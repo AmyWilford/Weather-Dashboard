@@ -11,11 +11,13 @@ let weatherTodayEl = $('#weatherToday');
 let weatherForcastEl = $('#weatherForecast');
 
 let APIKey = '4311ce3063db32c4ad7d1694e9068e53';
-let city ='Toronto';
-let queryUrl =  "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+let city ='';
 
 
 function getApi(){
+    city = searchInput.val().trim();
+    console.log(city);
+    let queryUrl =  "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
     fetch(queryUrl)
     .then(function(response){
         return response.json();
@@ -24,11 +26,7 @@ function getApi(){
         console.log(data);
     })
 }
-// Function to get City
-function getCity() {
-   city = searchInput.val();
-    console.log(city);
-}
+
 searchButton.on('click', getApi);
 
 
