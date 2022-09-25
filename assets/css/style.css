@@ -1,7 +1,18 @@
 * {
-
+margin:0;
+padding: 0;
 }
 
 header{
-   background-color: darkblue;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(47,59,221,1) 0%, rgba(8,8,60,1) 67%);
+}
+
+.custom-line-spacing {
+    line-height: 2.5rem;
+}
+/* forecast card */
+.custom-card {
+    background-color: #08083c;
+    color: white;
+    line-height: 2.5rem;
 }

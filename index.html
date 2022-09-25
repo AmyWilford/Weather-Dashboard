@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+    crossorigin="anonymous"
+    />
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" 
+    href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+    />
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Document</title>
 </head>
@@ -15,13 +25,31 @@
     </header>
 
     <main class="container-fluid">
-        <div class="row">
+        <div class="row p-4">
             <section class="col-12 col-md-4 col-lg-3">
                 <h2>Search for a city:</h2>
                 <div>
                     <input type="text" class="form-control" aria-label="default" placeholder="Toronto" aria-describedby="inputGroup-sizing-default">
-                    <button type="button" class="btn btn-primary w-100 my-3">Search</button>
+                    <button type="button" id="searchButton" class="btn btn-primary w-100 my-3">Search</button>
                 </div>
+                <hr>
+                <!-- append search history buttons here -->
+                <div id="searchHistory"></div>
+            </section>
+            <!-- append API serach results for current weather conditions -->
+            <section class="col-12 col-md-6 col-lg-9 ">
+                <div id="weatherToday" class="border border-dark p-3 custom-line-spacing">
+                    <h2 id="cityName">Where do you want to go?</h2>
+                    <div id=cityTemp>Temp:</div>
+                    <div id="cityWind">Wind:</div>
+                    <div id="cityHumidity">Humidity:</div>
+                    <div id="cityUVIndex">UVIndex</div>
+                </div>
+                <div id="weatherForecast" class="p-3 custom-line-spacing">
+                    <h2>5-Day Forecast:</h2>
+                <!-- append boxes with 5-day forecast -->
+                </div>
+                
             </section>
         </div>
     </main>
