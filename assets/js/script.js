@@ -8,6 +8,7 @@ let cityWindEl = $('#cityWind');
 let cityHumidityEl = $('#cityHumidity');
 let weatherTodayEl = $('#weatherToday');
 let weatherForcastEl = $('#weatherForecast');
+let iconEl = $('#icon');
 
 let APIKey = '4311ce3063db32c4ad7d1694e9068e53';
 let city ='';
@@ -51,8 +52,14 @@ function getCityWeather(){
         // Makes city first letter capitalized
         city = city.toLowerCase();
         city = city.charAt(0).toUpperCase()+city.slice(1);
+        // capture iconID
+        let iconId = data.weather[0].icon;
+
+        console.log(iconId);
+
+        iconEl.attr('src', 'https://openweathermap.org/img/wn/' + iconId+ '@2x.png');
         cityNameEl.text(city);
-        cityTempEl.text('Temp: ' + Math.round(data.main.temp-273.18) + ' °C');
+        cityTempEl.text('Temp: ' + Math.round(data.main.temp-273.15) + ' °C');
         cityWindEl.text('Wind: ' + data.wind.speed + ' MPH');
         cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');
        
