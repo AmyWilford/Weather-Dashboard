@@ -39,14 +39,17 @@
             <!-- append API serach results for current weather conditions -->
             <section class="col-12 col-md-6 col-lg-9 ">
                 <div id="weatherToday" class="border border-dark p-4 custom-line-spacing">
-                    <h2 id="cityName">Tell me where to look</h2>
-                    <img src="" id="icon"></img>
+                    <div class="d-flex align-items-center">
+                        <h2 id="cityName">Tell me where to look</h2>
+                        <img src="" id="icon" class="ml-2"></img>
+                    </div>
                     <div id=cityTemp>Temp:</div>
                     <div id="cityWind">Wind:</div>
                     <div id="cityHumidity">Humidity:</div>
                 </div>
-                <div id="weatherForecast" class="p-4 custom-line-spacing">
+                <div  class="p-4 custom-line-spacing">
                     <h2>5-Day Forecast:</h2>
+                    <div id="weatherForecast" class="row d-flex"></div>
                 <!-- append boxes with 5-day forecast -->
                 </div>
                 

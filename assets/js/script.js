@@ -31,10 +31,11 @@ function findCity(){
         console.log(data);
         lat = data.coord.lat;
         lon = data.coord.lon;
-        console.log(lat +' | '+ lon);
+        console.log(lat +' | '+ lon);    
         getCityWeather()   
         getFutureForecast() 
     })      
+    searchInput.val('');
     }
 }
 // Function to get city weather | Using current weather API and publish to page
@@ -65,8 +66,9 @@ function getCityWeather(){
         cityTempEl.text('Temp: ' + Math.round(data.main.temp-273.15) + ' °C');
         cityWindEl.text('Wind: ' + data.wind.speed + ' MPH');
         cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');
-
+        
         addSearchHistory();
+        
     })
 }
 
@@ -80,29 +82,57 @@ function getFutureForecast() {
     .then (function(data){
         console.log('Future Forecast ===========')
         console.log(data);
-        for (i=0; i<5; i++){
-            let forecastDate = $('<p>');
-            let forecastIcon = $('<img>');
-            let forecastTemp = $('<p>');
-            let forecastWind = $('<p>');
-            let forecastHumidity = $('<p>');
+        let resultList = data.list;
+        console.log(resultList);
 
-            forecastIconId = 
-            forecastDate = 
-    
-            forecastDate.text();
-            forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
-            forecastTemp.text();
-            forecastWind.text();
-    
-            weatherForcastEl.append(
-                forecastDate,
-                forecastIcon,
-                forecastTemp,
-                forecastWind,
-                forecastHumidity
+        let forecastDay = $('<div>').addClass('custom-card col-2')
+        let forecastDate = $('<p>');
+        let forecastIcon = $('<img>');
+        let forecastTemp = $('<p>');
+        let forecastWind = $('<p>');
+        let forecastHumidity = $('<p>');
+
+        // forecastIconId = 
+        // forecastDate = data.
+
+        forecastDate.text();
+        // forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
+        forecastTemp.text('Temp: '+ (Math.round(resultList[0].main.temp - 273.15)) + '°C');
+        forecastWind.text('Wind: ' + resultList[0].wind.speed + ' MPH');
+        forecastHumidity.text('Humidity: ' + resultList[0].main.humidity + ' %');
+
+
+        forecastDay.append(
+            forecastDate,
+            forecastIcon,
+            forecastTemp,
+            forecastWind,
+            forecastHumidity
             )
-        }
+        weatherForcastEl.append(forecastDay);
+        // for (i=0; i<5 ; i++){
+        //     let forecastDate = $('<p>');
+        //     let forecastIcon = $('<img>');
+        //     let forecastTemp = $('<p>');
+        //     let forecastWind = $('<p>');
+        //     let forecastHumidity = $('<p>');
+
+        //     // forecastIconId = 
+        //     // forecastDate = data.
+    
+        //     forecastDate.text();
+        //     forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
+        //     forecastTemp.text();
+        //     forecastWind.text();
+    
+        //     weatherForcastEl.append(
+        //         forecastDate,
+        //         forecastIcon,
+        //         forecastTemp,
+        //         forecastWind,
+        //         forecastHumidity
+        //     )
+        // }
     })
 }
 
@@ -112,20 +142,22 @@ function getFutureForecast() {
     // > append 5-day forecast cards)
 
 
-    
-
-// }
-function calculateCelsius(num){
-num = num - 273.15;
-return num;
-}
 
 // on Search Button - localStorage.setItems  > append search history buttons
 
 function addSearchHistory() {
     let pastSearchButton = $('<button>');
+    pastSearchButton.addClass('btn btn-secondary w-100 m-2')
+    pastSearchButton.attr('data-city', city);
     pastSearchButton.text(city);
     searchHistoryEl.append(pastSearchButton);
+
+    // localStorage.setItem(city, data)
+
+}
+
+function loadHistory() {
+    localStorage.setItem(city, data)
 
 }
 
