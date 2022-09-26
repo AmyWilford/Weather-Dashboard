@@ -18,7 +18,8 @@ let lon = '';
 // to find city...is this close?
 function findCity(){
     city = searchInput.val().trim();
-    let queryUrl = "http://api.openweathermap.org/geo/1.0/direct?q"+cityName + ","+ stateCode+ "," + countryCode+"&limit={limit}&appid="+APIKey;
+    console.log(city);
+    let queryUrl =  "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
     fetch(queryUrl)
     .then(function(response){
         return response.json();
@@ -32,7 +33,7 @@ function findCity(){
         function searchCity(){
             console.log(lat);
             console.log(lon);
-            let queryUrl =  'https://api.openweathermap.org/data/2.5/weather?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
+            let queryUrl =  'https://api.openweathermap.org/data/2.5/forecast?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
             fetch(queryUrl)
             .then(function(response){
                 return response.json();
@@ -44,9 +45,6 @@ function findCity(){
         searchCity();
     })
 }
-// How do I get the lat and lon from the previous fetch into below fetch
-// Function to get 
-
 
 searchButton.on('click', findCity);
 
