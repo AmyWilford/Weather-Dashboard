@@ -15,4 +15,13 @@ header{
     background-color: #08083c;
     color: white;
     line-height: 2.5rem;
+    margin: 10px;
+}
+
+.custom-icon {
+    width: 4rem;
+}
+
+.custom-subtitle {
+    font-size: 1.25rem;
 }

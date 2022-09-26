@@ -61,18 +61,18 @@ function getCityWeather(){
         // capture iconID
         let iconId = data.weather[0].icon;
         
-        iconEl.attr('src', 'https://openweathermap.org/img/wn/' + iconId+ '@2x.png');
+        iconEl.attr('src', 'https://openweathermap.org/img/wn/' + iconId+ '@2x.png').addClass('custom-icon')
         cityNameEl.text(city + ' ' + '(' + newDateFormat+')');
         cityTempEl.text('Temp: ' + Math.round(data.main.temp-273.15) + ' °C');
         cityWindEl.text('Wind: ' + data.wind.speed + ' MPH');
         cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');
         
         addSearchHistory();
-        
     })
 }
 
-// Function: Fetch API data and details to daily display & 5-day forecast
+// Function: Fetch API data and details to daily display & 5-day forecast 
+// TODO: Find every day - not 3 hour increments
 function getFutureForecast() {
     let queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
     fetch(queryUrl)
@@ -83,23 +83,25 @@ function getFutureForecast() {
         console.log('Future Forecast ===========')
         console.log(data);
         let resultList = data.list;
+    
         console.log(resultList);
 
+        for(let i=0; i<5; i++) {
         let forecastDay = $('<div>').addClass('custom-card col-2')
-        let forecastDate = $('<p>');
-        let forecastIcon = $('<img>');
+        let forecastDate = $('<p>').addClass('custom-subtitle')
+        let forecastIcon = $('<img>').addClass('custom-icon');
         let forecastTemp = $('<p>');
         let forecastWind = $('<p>');
         let forecastHumidity = $('<p>');
+        let forecastIconId = resultList[i].weather[0].icon
+        let upcomingDate = resultList[i].dt_txt.split(' ');
+        
 
-        // forecastIconId = 
-        // forecastDate = data.
-
-        forecastDate.text();
-        // forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
-        forecastTemp.text('Temp: '+ (Math.round(resultList[0].main.temp - 273.15)) + '°C');
-        forecastWind.text('Wind: ' + resultList[0].wind.speed + ' MPH');
-        forecastHumidity.text('Humidity: ' + resultList[0].main.humidity + ' %');
+        forecastDate.text(upcomingDate[0]);
+        forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
+        forecastTemp.text('Temp: '+ (Math.round(resultList[i].main.temp - 273.15)) + '°C');
+        forecastWind.text('Wind: ' + resultList[i].wind.speed + ' MPH');
+        forecastHumidity.text('Humidity: ' + resultList[i].main.humidity + ' %');
 
 
         forecastDay.append(
@@ -110,41 +112,16 @@ function getFutureForecast() {
             forecastHumidity
             )
         weatherForcastEl.append(forecastDay);
-        // for (i=0; i<5 ; i++){
-        //     let forecastDate = $('<p>');
-        //     let forecastIcon = $('<img>');
-        //     let forecastTemp = $('<p>');
-        //     let forecastWind = $('<p>');
-        //     let forecastHumidity = $('<p>');
-
-        //     // forecastIconId = 
-        //     // forecastDate = data.
+        }
     
-        //     forecastDate.text();
-        //     forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
-        //     forecastTemp.text();
-        //     forecastWind.text();
-    
-        //     weatherForcastEl.append(
-        //         forecastDate,
-        //         forecastIcon,
-        //         forecastTemp,
-        //         forecastWind,
-        //         forecastHumidity
-        //     )
-        // }
     })
 }
 
-// Search Button Event Listener: on click - fetch data from API and return 
-    // > display on screen 
-    // >append weather data to section
-    // > append 5-day forecast cards)
 
 
+// set local storage
 
-// on Search Button - localStorage.setItems  > append search history buttons
-
+// Create search hitory buttons 
 function addSearchHistory() {
     let pastSearchButton = $('<button>');
     pastSearchButton.addClass('btn btn-secondary w-100 m-2')
@@ -152,15 +129,14 @@ function addSearchHistory() {
     pastSearchButton.text(city);
     searchHistoryEl.append(pastSearchButton);
 
-    // localStorage.setItem(city, data)
-
+    localStorage.setItem(city, data)
 }
 
+// Load past search results on button click
 function loadHistory() {
     localStorage.setItem(city, data)
 
 }
 
-// on SearchHistory Button Click - localStorage.getItems > change display
 
 searchButton.on('click', findCity);
