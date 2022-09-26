@@ -37,7 +37,7 @@ function findCity(){
     })      
     }
 }
-// Function to get city weather | Using current weather API
+// Function to get city weather | Using current weather API and publish to page
 function getCityWeather(){
     console.log(lat);
     console.log(lon);
@@ -52,19 +52,21 @@ function getCityWeather(){
         // Makes city first letter capitalized
         city = city.toLowerCase();
         city = city.charAt(0).toUpperCase()+city.slice(1);
-        // capture iconID
-        let iconId = data.weather[0].icon;
-
+        
+        // Set current date and y/m/d format
         let currentDate = new Date();
         let newDateFormat = currentDate.getFullYear() + '/' +(currentDate.getMonth()+1) + '/' + currentDate.getDate();
-        console.log(iconId);
-
+        
+        // capture iconID
+        let iconId = data.weather[0].icon;
+        
         iconEl.attr('src', 'https://openweathermap.org/img/wn/' + iconId+ '@2x.png');
-        cityNameEl.text(city + ' ' + newDateFormat);
+        cityNameEl.text(city + ' ' + '(' + newDateFormat+')');
         cityTempEl.text('Temp: ' + Math.round(data.main.temp-273.15) + ' °C');
         cityWindEl.text('Wind: ' + data.wind.speed + ' MPH');
         cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');
-       
+
+        addSearchHistory();
     })
 }
 
@@ -78,7 +80,29 @@ function getFutureForecast() {
     .then (function(data){
         console.log('Future Forecast ===========')
         console.log(data);
+        for (i=0; i<5; i++){
+            let forecastDate = $('<p>');
+            let forecastIcon = $('<img>');
+            let forecastTemp = $('<p>');
+            let forecastWind = $('<p>');
+            let forecastHumidity = $('<p>');
 
+            forecastIconId = 
+            forecastDate = 
+    
+            forecastDate.text();
+            forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
+            forecastTemp.text();
+            forecastWind.text();
+    
+            weatherForcastEl.append(
+                forecastDate,
+                forecastIcon,
+                forecastTemp,
+                forecastWind,
+                forecastHumidity
+            )
+        }
     })
 }
 
@@ -87,7 +111,6 @@ function getFutureForecast() {
     // >append weather data to section
     // > append 5-day forecast cards)
 
-// function publishCurrentDay(receivedData) {
 
     
 
@@ -98,6 +121,13 @@ return num;
 }
 
 // on Search Button - localStorage.setItems  > append search history buttons
+
+function addSearchHistory() {
+    let pastSearchButton = $('<button>');
+    pastSearchButton.text(city);
+    searchHistoryEl.append(pastSearchButton);
+
+}
 
 // on SearchHistory Button Click - localStorage.getItems > change display
 
