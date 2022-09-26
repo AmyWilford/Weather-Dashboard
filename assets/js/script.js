@@ -55,10 +55,12 @@ function getCityWeather(){
         // capture iconID
         let iconId = data.weather[0].icon;
 
+        let currentDate = new Date();
+        let newDateFormat = currentDate.getFullYear() + '/' +(currentDate.getMonth()+1) + '/' + currentDate.getDate();
         console.log(iconId);
 
         iconEl.attr('src', 'https://openweathermap.org/img/wn/' + iconId+ '@2x.png');
-        cityNameEl.text(city);
+        cityNameEl.text(city + ' ' + newDateFormat);
         cityTempEl.text('Temp: ' + Math.round(data.main.temp-273.15) + ' °C');
         cityWindEl.text('Wind: ' + data.wind.speed + ' MPH');
         cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');
