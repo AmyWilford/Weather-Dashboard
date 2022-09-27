@@ -66,7 +66,7 @@ function getCityWeather(){
         // capture iconID
         let iconId = data.weather[0].icon;
         
-        iconEl.attr('src', 'https://openweathermap.org/img/wn/' + iconId+ '@2x.png').addClass('custom-icon')
+        iconEl.attr('src', 'https://openweathermap.org/img/wn/' + iconId+ '@2x.png').addClass('custom-icon').attr('alt', 'weather icon');
         cityNameEl.text(city + ' ' + '(' + newDateFormat+')');
         cityTempEl.text('Temp: ' + Math.round(data.main.temp-273.15) + ' °C');
         cityWindEl.text('Wind: ' + data.wind.speed + ' MPH');
@@ -94,7 +94,7 @@ function getFutureForecast() {
         // Create forecast elements and text content
             let forecastDay = $('<div>').addClass('custom-card col-2')
             let forecastDate = $('<p>').addClass('custom-subtitle')
-            let forecastIcon = $('<img>').addClass('custom-icon');
+            let forecastIcon = $('<img>').addClass('custom-icon').attr('alt', 'weather icon');
             let forecastTemp = $('<p>');
             let forecastWind = $('<p>');
             let forecastHumidity = $('<p>');
