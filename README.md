@@ -1,4 +1,4 @@
-# Weather-Dashboard
+# Weather Dashboard
 
 ## Table of Contents
 
@@ -41,7 +41,7 @@ THEN I am again presented with current and future conditions for that city
 - JavaScript
 - jQuery
 - Bootstrap
-- Open Weather API | Current Weather Data & 5 Day Weather forecast
+- Open Weather API | Current Weather Data & 5 Day Weather forecast: [https://openweathermap.org/api]
 
 ## Usage:
 

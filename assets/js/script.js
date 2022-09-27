@@ -22,7 +22,7 @@ function findCity(event){
     city = city.toLowerCase();
     city = city.charAt(0).toUpperCase()+city.slice(1);
     console.log(city);
-    let queryUrl =  "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+    let queryUrl =  "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
 
     if (city)
     fetch(queryUrl)
