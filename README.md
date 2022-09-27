@@ -10,7 +10,7 @@
 
 ## Description
 
-Use this site to search the weather conditions for any city in the world. Get up-to-date information on current weather conditions, and forecasted conditions for the week ahead. Past search results will automatically save so you can revisit your searches to see continued up-to-date data.
+Use this site to search the weather conditions for any city in the world. Get up-to-date information on current weather conditions, and forecasted conditions for the week ahead. Past search results will automatically save so you can revisit your searches to see updated forecast reports.
 
 ### User Story
 
@@ -45,7 +45,7 @@ THEN I am again presented with current and future conditions for that city
 
 ## Usage:
 
-Get up-to-date weather data on any city in the world - including currentt weather conditions, as well as forecasted weather for 5-days ahead. Search your city in the search bar to see your weather forecast. Past search results will be saved for easy access.
+Get up-to-date weather data on any city in the world - including current weather conditions, as well as forecasted weather for 5-days ahead. Search your city in the search bar to see your weather forecast. Past search results will be saved for easy access.
 
 ## Deployment:
 
