@@ -90,18 +90,21 @@ function getFutureForecast() {
         let resultList = [data.list[3], data.list[11], data.list[19], data.list[27], data.list[35]];
         forecastHeaderEl.text('5-Day Forecast: ') 
 
-        for(let i=0; i<resultList.length; i++) {
         // Create forecast elements and text content
+        for(let i=0; i<resultList.length; i++) {
             let forecastDay = $('<div>').addClass('custom-card col-2')
             let forecastDate = $('<p>').addClass('custom-subtitle')
             let forecastIcon = $('<img>').addClass('custom-icon').attr('alt', 'weather icon');
             let forecastTemp = $('<p>');
             let forecastWind = $('<p>');
             let forecastHumidity = $('<p>');
+
             // get weather icon ID from data results
             let forecastIconId = resultList[i].weather[0].icon
+
             // get date of weather forcast in format (yyy/mm/dd)
             let upcomingDate = resultList[i].dt_txt.split(' ');
+
             // add text content to forecast card elements
             forecastDate.text(upcomingDate[0]);
             forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
