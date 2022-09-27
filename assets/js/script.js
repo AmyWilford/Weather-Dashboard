@@ -14,10 +14,12 @@ let APIKey = '4311ce3063db32c4ad7d1694e9068e53';
 let city ='';
 let lat;
 let lon;
+let storedCities =[];
 
 // Function to locate city and fetch data on click
-function findCity(){
-    city = searchInput.val().trim();
+function findCity(event){
+    city = searchInput.val().trim() || event.target.innerHTML
+    console.log(city);
     let queryUrl =  "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
 
     if (!city) {
@@ -30,10 +32,10 @@ function findCity(){
     .then(function(data){
         console.log(data);
         lat = data.coord.lat;
-        lon = data.coord.lon;
-        console.log(lat +' | '+ lon);    
-        getCityWeather()   
-        getFutureForecast() 
+        lon = data.coord.lon;  
+        getCityWeather();  
+        getFutureForecast(); 
+        addSearchHistory();
     })      
     searchInput.val('');
     }
@@ -67,13 +69,13 @@ function getCityWeather(){
         cityWindEl.text('Wind: ' + data.wind.speed + ' MPH');
         cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');
         
-        addSearchHistory();
     })
 }
 
 // Function: Fetch API data and details to daily display & 5-day forecast 
 // TODO: Find every day - not 3 hour increments
 function getFutureForecast() {
+    // set empty string for forecast section
     let queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
     fetch(queryUrl)
     .then(function(response){
@@ -82,11 +84,11 @@ function getFutureForecast() {
     .then (function(data){
         console.log('Future Forecast ===========')
         console.log(data);
-        let resultList = data.list;
+        let resultList = [data.list[4], data.list[12], data.list[20], data.list[28], data.list[36]];
     
         console.log(resultList);
 
-        for(let i=0; i<5; i++) {
+        for(let i=0; i<resultList.length; i++) {
         let forecastDay = $('<div>').addClass('custom-card col-2')
         let forecastDate = $('<p>').addClass('custom-subtitle')
         let forecastIcon = $('<img>').addClass('custom-icon');
@@ -119,24 +121,38 @@ function getFutureForecast() {
 
 
 
-// set local storage
+
 
 // Create search hitory buttons 
 function addSearchHistory() {
-    let pastSearchButton = $('<button>');
-    pastSearchButton.addClass('btn btn-secondary w-100 m-2')
-    pastSearchButton.attr('data-city', city);
-    pastSearchButton.text(city);
-    searchHistoryEl.append(pastSearchButton);
-
-    localStorage.setItem(city, data)
+    
+    if(!storedCities.includes(city)) {
+        storedCities.push(city);
+        localStorage.setItem('storedCities', JSON.stringify(storedCities));
+    //    let pastSearchButton = $('<button>');
+    //     pastSearchButton.addClass('btn btn-secondary w-100 m-2')
+    //     // pastSearchButton.attr('data-city', city);
+    //     pastSearchButton.text(city);
+    //     searchHistoryEl.append(pastSearchButton);
+    } 
 }
 
 // Load past search results on button click
 function loadHistory() {
-    localStorage.setItem(city, data)
-
+    // getItem - I'm just retrienving the ket in a string, and it needs to be parsed because it's an object.
+    let retrievedCity = JSON.parse(localStorage.getItem('storedCities'));
+    console.log(retrievedCity);
+    for (i = 0; i<retrievedCity.length; i++) {
+        let pastSearchButton = $('<button>');
+        pastSearchButton.addClass('btn btn-secondary w-100 m-2')
+        // pastSearchButton.attr('data-city', city);
+        pastSearchButton.text(retrievedCity[i]);
+        searchHistoryEl.append(pastSearchButton);
+    }
 }
 
 
 searchButton.on('click', findCity);
+searchHistoryEl.on('click', findCity);
+
+loadHistory();
