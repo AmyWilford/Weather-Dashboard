@@ -9,6 +9,7 @@ let cityHumidityEl = $('#cityHumidity');
 let weatherTodayEl = $('#weatherToday');
 let weatherForcastEl = $('#weatherForecast');
 let iconEl = $('#icon');
+let forecastHeaderEl = $('#forecastTitle')
 
 let APIKey = '4311ce3063db32c4ad7d1694e9068e53';
 let city ='';
@@ -71,8 +72,7 @@ function getCityWeather(){
         cityNameEl.text(city + ' ' + '(' + newDateFormat+')');
         cityTempEl.text('Temp: ' + Math.round(data.main.temp-273.15) + ' °C');
         cityWindEl.text('Wind: ' + data.wind.speed + ' MPH');
-        cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');
-        
+        cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');  
     })
 }
 
@@ -87,7 +87,7 @@ function getFutureForecast() {
     .then (function(data){
         console.log(data);
         let resultList = [data.list[4], data.list[12], data.list[20], data.list[28], data.list[36]];
-    
+        forecastHeaderEl.text('5-Day Forecast: ') 
         for(let i=0; i<resultList.length; i++) {
         let forecastDay = $('<div>').addClass('custom-card col-2')
         let forecastDate = $('<p>').addClass('custom-subtitle')
@@ -97,7 +97,6 @@ function getFutureForecast() {
         let forecastHumidity = $('<p>');
         let forecastIconId = resultList[i].weather[0].icon
         let upcomingDate = resultList[i].dt_txt.split(' ');
-
         forecastDate.text(upcomingDate[0]);
         forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
         forecastTemp.text('Temp: '+ (Math.round(resultList[i].main.temp - 273.15)) + '°C');
