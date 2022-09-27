@@ -18,15 +18,18 @@ let storedCities =[];
 
 // Function to locate city and fetch data on click
 function findCity(event){
-    city = searchInput.val().trim() || event.target.innerHTML
+    city = (searchInput.val().trim()) || (event.target.innerHTML);
+    city = city.toLowerCase();
+    city = city.charAt(0).toUpperCase()+city.slice(1);
     console.log(city);
     let queryUrl =  "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
 
-    if (!city) {
-        alert ('Please enter a City name')
-    } else {
+    if (city)
     fetch(queryUrl)
     .then(function(response){
+        if (!response.ok) {
+            alert('Please enter a city name')
+        }
         return response.json();
     })
     .then(function(data){
@@ -38,8 +41,11 @@ function findCity(event){
         addSearchHistory();
     })      
     searchInput.val('');
+    lat='';
+    lon='';
+    
     }
-}
+
 // Function to get city weather | Using current weather API and publish to page
 function getCityWeather(){
     console.log(lat);
@@ -50,7 +56,6 @@ function getCityWeather(){
         return response.json();
     })
     .then(function(data){
-        console.log('Current Weather ===========')
         console.log(data);
         // Makes city first letter capitalized
         city = city.toLowerCase();
@@ -70,6 +75,7 @@ function getCityWeather(){
         cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');
         
     })
+    
 }
 
 // Function: Fetch API data and details to daily display & 5-day forecast 
@@ -82,7 +88,6 @@ function getFutureForecast() {
         return response.json()
     })
     .then (function(data){
-        console.log('Future Forecast ===========')
         console.log(data);
         let resultList = [data.list[4], data.list[12], data.list[20], data.list[28], data.list[36]];
     
@@ -97,14 +102,12 @@ function getFutureForecast() {
         let forecastHumidity = $('<p>');
         let forecastIconId = resultList[i].weather[0].icon
         let upcomingDate = resultList[i].dt_txt.split(' ');
-        
 
         forecastDate.text(upcomingDate[0]);
         forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
         forecastTemp.text('Temp: '+ (Math.round(resultList[i].main.temp - 273.15)) + '°C');
         forecastWind.text('Wind: ' + resultList[i].wind.speed + ' MPH');
         forecastHumidity.text('Humidity: ' + resultList[i].main.humidity + ' %');
-
 
         forecastDay.append(
             forecastDate,
@@ -115,40 +118,33 @@ function getFutureForecast() {
             )
         weatherForcastEl.append(forecastDay);
         }
-    
     })
 }
 
-
-
-
-
 // Create search hitory buttons 
 function addSearchHistory() {
-    
     if(!storedCities.includes(city)) {
         storedCities.push(city);
         localStorage.setItem('storedCities', JSON.stringify(storedCities));
-    //    let pastSearchButton = $('<button>');
-    //     pastSearchButton.addClass('btn btn-secondary w-100 m-2')
-    //     // pastSearchButton.attr('data-city', city);
-    //     pastSearchButton.text(city);
-    //     searchHistoryEl.append(pastSearchButton);
+        let pastSearchButton = $('<button>');
+        pastSearchButton.addClass('btn btn-secondary w-100 m-2')
+        pastSearchButton.text(city);
+        searchHistoryEl.append(pastSearchButton);
     } 
 }
 
+
 // Load past search results on button click
 function loadHistory() {
-    // getItem - I'm just retrienving the ket in a string, and it needs to be parsed because it's an object.
-    let retrievedCity = JSON.parse(localStorage.getItem('storedCities'));
-    console.log(retrievedCity);
-    for (i = 0; i<retrievedCity.length; i++) {
+    let loadedCity = JSON.parse(localStorage.getItem('storedCities'));
+    console.log(loadedCity);
+    for (i = 0; i<loadedCity.length; i++) {
         let pastSearchButton = $('<button>');
         pastSearchButton.addClass('btn btn-secondary w-100 m-2')
-        // pastSearchButton.attr('data-city', city);
-        pastSearchButton.text(retrievedCity[i]);
+        pastSearchButton.text(loadedCity[i]);
         searchHistoryEl.append(pastSearchButton);
-    }
+    };
+    return
 }
 
 
@@ -156,3 +152,5 @@ searchButton.on('click', findCity);
 searchHistoryEl.on('click', findCity);
 
 loadHistory();
+
+

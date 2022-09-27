@@ -4,12 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-    rel="stylesheet"
-    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-    crossorigin="anonymous"
-    />
+    <!-- Stylesheet links -->
     <link rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
     />
@@ -17,31 +12,33 @@
     href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     />
     <link rel="stylesheet" href="assets/css/style.css">
-    <title>Document</title>
+    <title>Weather Dashboard</title>
 </head>
 <body>
+    <!-- Site Header -->
     <header class="text-center text-white custom-header">
         <h1 class="p-3">Weather Dashboard</h1>
     </header>
-
+    <!-- Main container to hold entire site -->
     <main class="container-fluid">
         <div class="row p-3">
+            <!-- Section to hold search bar and search history -->
             <section class="col-12 col-md-4 col-lg-3">
                 <h2 class="font-weight-bold">Search for a city:</h2>
                 <div>
-                    <input type="text" id="searchInput" class="form-control" aria-label="default" placeholder="Toronto" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" id="searchInput" class="form-control" aria-label="default" placeholder="find your city..." aria-describedby="inputGroup-sizing-default">
                     <button type="button" id="searchButton" class="btn btn-primary w-100 my-3">Search</button>
                 </div>
                 <hr>
-                <!-- append search history buttons here -->
+                <!-- past search history buttons appended here -->
                 <div id="searchHistory"></div>
             </section>
-
-            <!-- append API serach results for current weather conditions -->
+            <!-- Seciton to hold all search results -->
+            <!--  API serach results for current weather conditions appended here -->
             <section id="searchResults" class="col-12 col-md-6 col-lg-9 ">
                 <div id="weatherToday" class="border border-dark p-3 custom-line-spacing">
                     <div class="d-flex align-items-center">
-                        <h2 id="cityName" class="font-weight-bold">Tell me where to look</h2>
+                        <h2 id="cityName" class="font-weight-bold">Where to?</h2>
                         <img src="" id="icon" class="ml-2"></img>
                     </div>
                     <div id=cityTemp>Temp:</div>
@@ -51,16 +48,15 @@
                 <div  class="p-3 custom-line-spacing">
                     <h3>5-Day Forecast:</h3>
                     <div id="weatherForecast" class="row d-flex"></div>
-                <!-- append boxes with 5-day forecast -->
+                <!-- 5-day forecast boxes appended here -->
                 </div>
-                
             </section>
         </div>
     </main>
+    <!-- Script Tags -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
