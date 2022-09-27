@@ -73,9 +73,9 @@ function getCityWeather(){
 }
 
 // Function: Fetch API data and details to daily display & 5-day forecast 
-// TODO: Find every day - not 3 hour increments
+
 function getFutureForecast() {
-    // set empty string for forecast section
+    weatherForcastEl.text('');
     let queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
     fetch(queryUrl)
     .then(function(response){
