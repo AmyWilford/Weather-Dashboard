@@ -16,7 +16,7 @@ let lat;
 let lon;
 let storedCities =[];
 
-// Function to locate city and fetch data on click
+// Function to locate city and fetch data lon & lat data on click
 function findCity(event){
     city = (searchInput.val().trim()) || (event.target.innerHTML);
     city = city.toLowerCase();
@@ -43,8 +43,7 @@ function findCity(event){
     searchInput.val('');
     lat='';
     lon='';
-    
-    }
+}
 
 // Function to get city weather | Using current weather API and publish to page
 function getCityWeather(){
@@ -75,11 +74,9 @@ function getCityWeather(){
         cityHumidityEl.text('Humidity: ' + data.main.humidity + ' %');
         
     })
-    
 }
 
 // Function: Fetch API data and details to daily display & 5-day forecast 
-
 function getFutureForecast() {
     weatherForcastEl.text('');
     let queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
@@ -91,8 +88,6 @@ function getFutureForecast() {
         console.log(data);
         let resultList = [data.list[4], data.list[12], data.list[20], data.list[28], data.list[36]];
     
-        console.log(resultList);
-
         for(let i=0; i<resultList.length; i++) {
         let forecastDay = $('<div>').addClass('custom-card col-2')
         let forecastDate = $('<p>').addClass('custom-subtitle')
@@ -118,7 +113,7 @@ function getFutureForecast() {
             )
         weatherForcastEl.append(forecastDay);
         }
-    })
+    });
 }
 
 // Create search hitory buttons 
@@ -147,10 +142,10 @@ function loadHistory() {
     return
 }
 
+loadHistory();
 
 searchButton.on('click', findCity);
 searchHistoryEl.on('click', findCity);
 
-loadHistory();
 
 
