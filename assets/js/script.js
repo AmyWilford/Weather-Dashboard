@@ -133,7 +133,7 @@ function addSearchHistory() {
 function loadHistory() {
     let loadedCity = JSON.parse(localStorage.getItem('storedCities'));
     console.log(loadedCity);
-    if(loadedCity) {
+    if(loadedCity!==null) {
         for (i = 0; i<loadedCity.length; i++) {
             let pastSearchButton = $('<button>');
             pastSearchButton.addClass('btn btn-secondary w-100 m-2')
