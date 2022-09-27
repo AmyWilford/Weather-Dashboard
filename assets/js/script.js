@@ -125,6 +125,7 @@ function addSearchHistory() {
         pastSearchButton.text(city);
         searchHistoryEl.append(pastSearchButton);
     } 
+    return;
 }
 
 
@@ -132,13 +133,16 @@ function addSearchHistory() {
 function loadHistory() {
     let loadedCity = JSON.parse(localStorage.getItem('storedCities'));
     console.log(loadedCity);
-    for (i = 0; i<loadedCity.length; i++) {
-        let pastSearchButton = $('<button>');
-        pastSearchButton.addClass('btn btn-secondary w-100 m-2')
-        pastSearchButton.text(loadedCity[i]);
-        searchHistoryEl.append(pastSearchButton);
-    };
-    return
+    if(loadedCity) {
+        for (i = 0; i<loadedCity.length; i++) {
+            let pastSearchButton = $('<button>');
+            pastSearchButton.addClass('btn btn-secondary w-100 m-2')
+            pastSearchButton.text(loadedCity[i]);
+            searchHistoryEl.append(pastSearchButton);
+        };
+        return
+    }
+    
 }
 
 loadHistory();
