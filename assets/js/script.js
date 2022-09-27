@@ -11,6 +11,7 @@ let weatherForcastEl = $('#weatherForecast');
 let iconEl = $('#icon');
 let forecastHeaderEl = $('#forecastTitle')
 
+// Set global variables
 let APIKey = '4311ce3063db32c4ad7d1694e9068e53';
 let city ='';
 let lat;
@@ -34,7 +35,6 @@ function findCity(event){
         return response.json();
     })
     .then(function(data){
-        console.log(data);
         lat = data.coord.lat;
         lon = data.coord.lon;  
         getCityWeather();  
@@ -44,10 +44,8 @@ function findCity(event){
     searchInput.val('');
 }
 
-// Function to get city weather | Using current weather API and publish to page
+// Function to get city current weather using lat and lon from searchCity
 function getCityWeather(){
-    console.log(lat);
-    console.log(lon);
     let queryUrl =  'https://api.openweathermap.org/data/2.5/weather?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
     fetch(queryUrl)
     .then(function(response){
@@ -57,7 +55,6 @@ function getCityWeather(){
         return response.json();
     })
     .then(function(data){
-        console.log(data);
         // Makes city first letter capitalized
         city = city.toLowerCase();
         city = city.charAt(0).toUpperCase()+city.slice(1);
@@ -77,7 +74,7 @@ function getCityWeather(){
     })
 }
 
-// Function: Fetch API data and details to daily display & 5-day forecast 
+// Function: Fetch API data and details to display future 5-day forecast 
 function getFutureForecast() {
     weatherForcastEl.text('');
     let queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
@@ -89,32 +86,33 @@ function getFutureForecast() {
         return response.json()
     })
     .then (function(data){
-        console.log(data);
+        // Establish array of listed forecasts to grab same time each day over five-days
         let resultList = [data.list[4], data.list[12], data.list[20], data.list[28], data.list[36]];
         forecastHeaderEl.text('5-Day Forecast: ') 
         for(let i=0; i<resultList.length; i++) {
-        let forecastDay = $('<div>').addClass('custom-card col-2')
-        let forecastDate = $('<p>').addClass('custom-subtitle')
-        let forecastIcon = $('<img>').addClass('custom-icon');
-        let forecastTemp = $('<p>');
-        let forecastWind = $('<p>');
-        let forecastHumidity = $('<p>');
-        let forecastIconId = resultList[i].weather[0].icon
-        let upcomingDate = resultList[i].dt_txt.split(' ');
-        forecastDate.text(upcomingDate[0]);
-        forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
-        forecastTemp.text('Temp: '+ (Math.round(resultList[i].main.temp - 273.15)) + '°C');
-        forecastWind.text('Wind: ' + resultList[i].wind.speed + ' MPH');
-        forecastHumidity.text('Humidity: ' + resultList[i].main.humidity + ' %');
+        // Create forecast elements and text content, append to parent weatherForecastEl
+            let forecastDay = $('<div>').addClass('custom-card col-2')
+            let forecastDate = $('<p>').addClass('custom-subtitle')
+            let forecastIcon = $('<img>').addClass('custom-icon');
+            let forecastTemp = $('<p>');
+            let forecastWind = $('<p>');
+            let forecastHumidity = $('<p>');
+            let forecastIconId = resultList[i].weather[0].icon
+            let upcomingDate = resultList[i].dt_txt.split(' ');
+            forecastDate.text(upcomingDate[0]);
+            forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
+            forecastTemp.text('Temp: '+ (Math.round(resultList[i].main.temp - 273.15)) + '°C');
+            forecastWind.text('Wind: ' + resultList[i].wind.speed + ' MPH');
+            forecastHumidity.text('Humidity: ' + resultList[i].main.humidity + ' %');
 
-        forecastDay.append(
-            forecastDate,
-            forecastIcon,
-            forecastTemp,
-            forecastWind,
-            forecastHumidity
-            )
-        weatherForcastEl.append(forecastDay);
+            forecastDay.append(
+                forecastDate,
+                forecastIcon,
+                forecastTemp,
+                forecastWind,
+                forecastHumidity
+                )
+            weatherForcastEl.append(forecastDay);
         }
     });
 }
@@ -132,7 +130,7 @@ function addSearchHistory() {
     }  
 }
 
-// Load past search results on button click
+// Load past search results and maintain search history buttons
 function loadHistory() {
     loadedCity = JSON.parse(localStorage.getItem('loadedCity')) || [];
     if(loadedCity!==null) {
@@ -146,7 +144,6 @@ function loadHistory() {
 }
 
 loadHistory();
-
 searchButton.on('click', findCity);
 searchHistoryEl.on('click', findCity);
 
