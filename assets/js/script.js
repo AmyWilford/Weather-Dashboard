@@ -29,7 +29,7 @@ function findCity(event){
     fetch(queryUrl)
     .then(function(response){
         if (!response.ok) {
-            alert('Please enter a city name')
+            alert('Unknown city. \nPlease enter a valid city name')
         }
         return response.json();
     })
@@ -119,10 +119,10 @@ function getFutureForecast() {
     });
 }
 
-// Create search hitory buttons 
+// Create search hitory buttons and set local storage
 function addSearchHistory() {
+    // loadedCity = [];
     if(!loadedCity.includes(city)) {
-        console.log('true');
         loadedCity.push(city);
         localStorage.setItem('loadedCity', JSON.stringify(loadedCity));
         let pastSearchButton = $('<button>');
@@ -130,13 +130,11 @@ function addSearchHistory() {
         pastSearchButton.text(city);
         searchHistoryEl.append(pastSearchButton);
     }  
-    return;
 }
 
 // Load past search results on button click
 function loadHistory() {
-    loadedCity = JSON.parse(localStorage.getItem('loadedCity'));
-    console.log(loadedCity);
+    loadedCity = JSON.parse(localStorage.getItem('loadedCity')) || [];
     if(loadedCity!==null) {
         for (i = 0; i<loadedCity.length; i++) {
             let pastSearchButton = $('<button>');
@@ -144,9 +142,7 @@ function loadHistory() {
             pastSearchButton.text(loadedCity[i]);
             searchHistoryEl.append(pastSearchButton);
         };
-        return
     } 
-    console.log(loadedCity);
 }
 
 loadHistory();
