@@ -87,24 +87,29 @@ function getFutureForecast() {
     })
     .then (function(data){
         // Establish array of listed forecasts to grab same time each day over five-days
-        let resultList = [data.list[4], data.list[12], data.list[20], data.list[28], data.list[36]];
+        let resultList = [data.list[3], data.list[11], data.list[19], data.list[27], data.list[35]];
         forecastHeaderEl.text('5-Day Forecast: ') 
+
         for(let i=0; i<resultList.length; i++) {
-        // Create forecast elements and text content, append to parent weatherForecastEl
+        // Create forecast elements and text content
             let forecastDay = $('<div>').addClass('custom-card col-2')
             let forecastDate = $('<p>').addClass('custom-subtitle')
             let forecastIcon = $('<img>').addClass('custom-icon');
             let forecastTemp = $('<p>');
             let forecastWind = $('<p>');
             let forecastHumidity = $('<p>');
+            // get weather icon ID from data results
             let forecastIconId = resultList[i].weather[0].icon
+            // get date of weather forcast in format (yyy/mm/dd)
             let upcomingDate = resultList[i].dt_txt.split(' ');
+            // add text content to forecast card elements
             forecastDate.text(upcomingDate[0]);
             forecastIcon.attr('src','https://openweathermap.org/img/wn/' + forecastIconId+ '@2x.png')
             forecastTemp.text('Temp: '+ (Math.round(resultList[i].main.temp - 273.15)) + '°C');
             forecastWind.text('Wind: ' + resultList[i].wind.speed + ' MPH');
             forecastHumidity.text('Humidity: ' + resultList[i].main.humidity + ' %');
 
+            // Append forecast elements to parent weatherForecastEl
             forecastDay.append(
                 forecastDate,
                 forecastIcon,
@@ -119,7 +124,6 @@ function getFutureForecast() {
 
 // Create search hitory buttons and set local storage
 function addSearchHistory() {
-    // loadedCity = [];
     if(!loadedCity.includes(city)) {
         loadedCity.push(city);
         localStorage.setItem('loadedCity', JSON.stringify(loadedCity));
