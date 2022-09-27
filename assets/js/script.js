@@ -17,6 +17,8 @@ let lat;
 let lon;
 let storedCities =[];
 
+loadHistory();
+
 // Function to locate city and fetch data lon & lat data on click
 function findCity(event){
     city = (searchInput.val().trim()) || (event.target.innerHTML);
@@ -144,9 +146,6 @@ function loadHistory() {
     }
     
 }
-
-loadHistory();
-
 searchButton.on('click', findCity);
 searchHistoryEl.on('click', findCity);
 
