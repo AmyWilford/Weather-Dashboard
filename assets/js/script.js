@@ -15,13 +15,11 @@ let APIKey = '4311ce3063db32c4ad7d1694e9068e53';
 let city ='';
 let lat;
 let lon;
-let storedCities =[];
-
-loadHistory();
+let loadedCity =[];
 
 // Function to locate city and fetch data lon & lat data on click
 function findCity(event){
-    city = (searchInput.val().trim()) || (event.target.innerHTML);
+    city = searchInput.val().trim() || event.target.innerHTML;
     city = city.toLowerCase();
     city = city.charAt(0).toUpperCase()+city.slice(1);
     console.log(city);
@@ -44,8 +42,6 @@ function findCity(event){
         addSearchHistory();
     })      
     searchInput.val('');
-    lat='';
-    lon='';
 }
 
 // Function to get city weather | Using current weather API and publish to page
@@ -55,6 +51,9 @@ function getCityWeather(){
     let queryUrl =  'https://api.openweathermap.org/data/2.5/weather?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
     fetch(queryUrl)
     .then(function(response){
+        if (!response.ok) {
+            alert('Error: ' + response)
+        }
         return response.json();
     })
     .then(function(data){
@@ -84,6 +83,9 @@ function getFutureForecast() {
     let queryUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+ lat +'&lon='+ lon +'&appid='+APIKey;
     fetch(queryUrl)
     .then(function(response){
+        if (!response.ok) {
+            alert('Error: ' + response)
+        }
         return response.json()
     })
     .then (function(data){
@@ -119,21 +121,21 @@ function getFutureForecast() {
 
 // Create search hitory buttons 
 function addSearchHistory() {
-    if(!storedCities.includes(city)) {
-        storedCities.push(city);
-        localStorage.setItem('storedCities', JSON.stringify(storedCities));
+    if(!loadedCity.includes(city)) {
+        console.log('true');
+        loadedCity.push(city);
+        localStorage.setItem('loadedCity', JSON.stringify(loadedCity));
         let pastSearchButton = $('<button>');
         pastSearchButton.addClass('btn btn-secondary w-100 m-2')
         pastSearchButton.text(city);
         searchHistoryEl.append(pastSearchButton);
-    } 
+    }  
     return;
 }
 
-
 // Load past search results on button click
 function loadHistory() {
-    let loadedCity = JSON.parse(localStorage.getItem('storedCities'));
+    loadedCity = JSON.parse(localStorage.getItem('loadedCity'));
     console.log(loadedCity);
     if(loadedCity!==null) {
         for (i = 0; i<loadedCity.length; i++) {
@@ -143,9 +145,12 @@ function loadHistory() {
             searchHistoryEl.append(pastSearchButton);
         };
         return
-    }
-    
+    } 
+    console.log(loadedCity);
 }
+
+loadHistory();
+
 searchButton.on('click', findCity);
 searchHistoryEl.on('click', findCity);
 
