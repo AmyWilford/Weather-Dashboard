@@ -92,7 +92,7 @@ function getFutureForecast() {
 
         // Create forecast elements and text content
         for(let i=0; i<resultList.length; i++) {
-            let forecastDay = $('<div>').addClass('custom-card col-2')
+            let forecastDay = $('<div>').addClass('custom-card col-sm-3')
             let forecastDate = $('<p>').addClass('custom-subtitle')
             let forecastIcon = $('<img>').addClass('custom-icon').attr('alt', 'weather icon');
             let forecastTemp = $('<p>');
